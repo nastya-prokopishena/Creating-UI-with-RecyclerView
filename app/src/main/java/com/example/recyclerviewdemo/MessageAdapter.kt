@@ -3,6 +3,7 @@ package com.example.recyclerviewdemo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,12 @@ class MessageAdapter(
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.bind(messages[position])
+
+        // Long click listener
+        holder.itemView.setOnLongClickListener {
+            onItemClick(messages[position])
+            true
+        }
     }
 
     override fun getItemCount(): Int = messages.size
@@ -48,9 +55,9 @@ class MessageAdapter(
     }
 
     inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val title: TextView = itemView.findViewById(R.id.title)
         private val text: TextView = itemView.findViewById(R.id.text)
+        private val dragHandle: ImageView? = itemView.findViewById(R.id.dragHandle)
 
         fun bind(message: Message) {
             title.text = message.title
